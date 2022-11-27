@@ -1,38 +1,49 @@
-import csv
-from model import Legislator, Bill, Vote, VoteResult
+from controller import LegislativeData
+from models.bill import Bill
+from models.legislator import Legislator
+from models.vote import Vote
+from models.vote_result import VoteResult
 
-class SerializerData:
+
+class LegislatorsVotes(LegislativeData):
     def __init__(self):
-        self.supported_bills = 0
+        self.legislators_votes()
+        self.bills_votes()
 
-    with open("./repository/legislators.csv", 'r') as file:
-        csvreader = csv.reader(file)
-        next(csvreader)
-        legislators = []
-        for row in csvreader:
-            legislators.append(Legislator(id=row[0], name=row[1]))
-        print(legislators)
+    def legislators_votes(self):
+        for vote in vote_results:
+            legislator = self.get_legislator()
+            if legislator.id == vote.legislator:
+                legislator.vote(vote)
 
-    with open("./repository/bills.csv", 'r') as file:
-        csvreader = csv.reader(file)
-        next(csvreader)
-        bills = []
-        for row in csvreader:
-            bills.append(Bill(id=row[0], title=row[1]))
-        print(bills)
+    def bills_votes(self):
+        for vote_result in vote_results:
+            vote = self.get_vote(vote_result.vote_id)
+            bill = self.get_bill(vote.bill)
+            if vote_result.type == 1:
+                bill.add_supporter_vote()
+            if vote_result.type == 2:
+                bill.add_opposer_vote()
+        print(self.bills)
+    
+    def get_bill(self, bill_id):
+        for bill in self.bills:
+            if bill.id == bill_id:
+                return bill
+    
+    def get_vote(self, vote_id):
+        for vote in self.votes:
+            if vote.id == vote_id:
+                return vote
 
-    with open("./repository/votes.csv", 'r') as file:
-        csvreader = csv.reader(file)
-        next(csvreader)
-        votes = []
-        for row in csvreader:
-            votes.append(Vote(id=row[0], bill=row[1]))
-        print(votes)
-        
-    with open("./repository/vote_results.csv", 'r') as file:
-        csvreader = csv.reader(file)
-        next(csvreader)
-        vote_results = []
-        for row in csvreader:
-            vote_results.append(VoteResult(id=row[0], legislator=row[1], vote=row[2], type=row[3]))
-        print(vote_results)
+    def get_legislator(self, legislator_id):
+        for legislator in legislators:
+            if legislator_id == legislator.id:
+                return legislator
+
+    # print(legislators[0].number_of_supported_bills())
+    # print(legislators[0].number_of_opposed_bills())
+
+    # print(bills[0])
+    # print(bills[0].opposer_count)
+    # print(bills[0].supporter_count)
