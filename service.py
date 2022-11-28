@@ -8,6 +8,10 @@ from models.vote_result import VoteResult
 
 
 class LegislatorsVotes(LegislativeData):
+    """
+    Update Legislastor objects with each bill supported and opposed and
+    generates the requested legislators-support-oppose-count.csv
+    """
 
     def __init__(self):
         super().__init__()
@@ -41,7 +45,11 @@ class LegislatorsVotes(LegislativeData):
                 return legislator
 
 class BillsVotes(LegislativeData):
-
+    """
+    Update Bills objects with how many legislators supported and opposed the bill and
+    generate the requested bills.csv 
+    """
+    
     def __init__(self):
         super().__init__()
         self.bills_votes()

@@ -7,6 +7,10 @@ from models.vote_result import VoteResult
 
 
 class LegislativeData:
+    """
+    Extract the data from the provided csv's
+    """
+
     def __init__(self):
         self.legislators = self.extract_legislators()
         self.bills = self.extract_bills()
