@@ -15,7 +15,7 @@ class LegislativeData:
 
     def extract_legislators(self):
         legislators = []
-        with open("./repository/legislators.csv", 'r') as file:
+        with open("./repository/input/legislators.csv", 'r') as file:
             csvreader = csv.reader(file)
             next(csvreader)
             for row in csvreader:
@@ -23,25 +23,28 @@ class LegislativeData:
         return legislators
 
     def extract_bills(self):
-        with open("./repository/bills.csv", 'r') as file:
+        bills = []
+        with open("./repository/input/bills.csv", 'r') as file:
             csvreader = csv.reader(file)
             next(csvreader)
-            bills = []
             for row in csvreader:
-                self.bills.append(Bill(id=int(row[0]), title=row[1]))
+                bills.append(Bill(id=int(row[0]), title=row[1], sponsor=int(row[2])))
+        return bills
 
     def extract_votes(self):
-        with open("./repository/votes.csv", 'r') as file:
+        votes = []
+        with open("./repository/input/votes.csv", 'r') as file:
             csvreader = csv.reader(file)
             next(csvreader)
-            votes = []
             for row in csvreader:
-                self.votes.append(Vote(id=int(row[0]), bill=int(row[1])))
+                votes.append(Vote(id=int(row[0]), bill=int(row[1])))
+        return votes
         
     def extract_vote_results(self):
-        with open("./repository/vote_results.csv", 'r') as file:
+        vote_results = []
+        with open("./repository/input/vote_results.csv", 'r') as file:
             csvreader = csv.reader(file)
             next(csvreader)
-            vote_results = []
             for row in csvreader:
-                self.vote_results.append(VoteResult(id=int(row[0]), legislator=int(row[1]), vote=int(row[2]), type=int(row[3])))
+                vote_results.append(VoteResult(id=int(row[0]), legislator=int(row[1]), vote=int(row[2]), type=int(row[3])))
+        return vote_results

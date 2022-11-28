@@ -2,7 +2,6 @@ from models.vote_result import VoteResult
 
 
 class Legislator:
-
     def __init__(self, id:int, name:str):
         self.id = id
         self.name = name
